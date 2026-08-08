@@ -46,12 +46,12 @@ class Ftp(Percent):
 
 
 @dataclass
-class MaxHR(Percent):
+class MaxHeartRate(Percent):
     percent: Union[int, Tuple[int, int]]
 
 
 @dataclass
-class ThresholdHR(Percent):
+class ThresholdHeartRate(Percent):
     percent: Union[int, Tuple[int, int]]
 
 
@@ -81,7 +81,7 @@ class PaceZone(Zones):
 
 
 @dataclass
-class HR(Zones):
+class HeartRate(Zones):
     zone: Zone
 
 
