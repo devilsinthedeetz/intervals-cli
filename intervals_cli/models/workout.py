@@ -18,9 +18,22 @@ class Zone(Enum):
     Z5 = "Z5"
 
 
+class Units(Enum):
+    METRIC = "Metric"
+    IMPERIAL = "Imperial"
+
+
+@dataclass
+class Pace:
+    min: int
+    sec: int
+    unit: Units
+
+
 # Targets
 
 
+@dataclass
 class Target:
     pass
 
@@ -66,8 +79,8 @@ class Watts(Absolute):
 
 
 @dataclass
-class Pace(Absolute):
-    pace: Union[str, Tuple[str, str]]
+class AbsolutePace(Absolute):
+    pace: Union[Pace, Tuple[Pace, Pace]]
 
 
 @dataclass
