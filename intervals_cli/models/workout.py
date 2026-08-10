@@ -5,9 +5,9 @@ from enum import Enum
 
 
 class Sport(Enum):
-    RUN = "Run"
-    RIDE = "Ride"
-    SWIM = "Swim"
+    RUN = "run"
+    BIKE = "bike"
+    SWIM = "swim"
 
 
 class Zone(Enum):
