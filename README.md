@@ -1,7 +1,7 @@
 # intervals-cli
 A python cli application for creating and uploading structured workouts to intervals.icu, with an interactive workout builder. Also includes basic wellness-data export.
 
-> **!! Important !!**
+> ## !! Important !!
 > Please note that this *personal* project is still in very early development, and is not intended to be used in it's current state.
 
 ## Requirements
