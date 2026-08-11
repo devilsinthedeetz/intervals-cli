@@ -18,16 +18,42 @@ class Zone(Enum):
     Z5 = "Z5"
 
 
-class Units(Enum):
-    METRIC = "Metric"
-    IMPERIAL = "Imperial"
+class PaceUnit(Enum):
+    KM = "/km"
+    MI = "/mi"
+    PACE_PER_100M = "/100m"
+    PACE_PER_100Y = "/100y"
+    PACE_PER_400M = "/400m"
+
+
+class DistanceUnit(Enum):
+    YD = "yd"
+    METER = "meter"
+    KM = "km"
+    MI = "mi"
+
+
+class RampType(Enum):
+    PACE = "pace"
+    WATTS = "watts"
 
 
 @dataclass
 class Pace:
     min: int
     sec: int
-    unit: Units
+    unit: PaceUnit
+
+
+@dataclass
+class DistanceDuration:
+    distance: float
+    unit: DistanceUnit
+
+
+@dataclass
+class TimeDuration:
+    duration: timedelta
 
 
 # Targets
@@ -99,12 +125,13 @@ class HeartRate(Zones):
 
 
 @dataclass
-class Ramps:
+class Ramp(Target):
     percent_range: Tuple[int, int]
+    ramp_type: RampType
 
 
 @dataclass
-class FreeRide:
+class FreeRide(Target):
     pass
 
 
@@ -114,7 +141,7 @@ class FreeRide:
 @dataclass
 class WorkoutStep:
     repetitions: int
-    duration: timedelta
+    step_duration: TimeDuration | DistanceDuration
     target: Target
 
 
@@ -129,5 +156,35 @@ class WorkoutSection:
 class Workout:
     name: str
     sport: Sport
-    steps: list[WorkoutSection]
-    total_duration: timedelta
+    sections: list[WorkoutSection]
+
+
+SPORT_TARGETS = {
+    Sport.RUN: (
+        ThresholdPace,
+        AbsolutePace,
+        PaceZone,
+        HeartRate,
+        MaxHeartRate,
+        ThresholdHeartRate,
+        Watts,
+    ),
+    Sport.BIKE: (
+        Ftp,
+        Watts,
+        Power,
+        HeartRate,
+        MaxHeartRate,
+        ThresholdHeartRate,
+    ),
+    Sport.SWIM: (
+        ThresholdPace,
+        AbsolutePace,
+        PaceZone,
+    ),
+}
+
+SPORT_PACE_UNIT = {
+    Sport.RUN: (PaceUnit.KM, PaceUnit.MI, PaceUnit.PACE_PER_400M),
+    Sport.SWIM: (PaceUnit.PACE_PER_100M, PaceUnit.PACE_PER_100Y),
+}
